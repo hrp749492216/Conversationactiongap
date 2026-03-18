@@ -14,7 +14,7 @@ import yaml
 from researchclaw.adapters import AdapterBundle
 from researchclaw.config import RCConfig
 from researchclaw.hardware import HardwareProfile, detect_hardware, ensure_torch_available, is_metric_name
-from researchclaw.llm import create_llm_client
+from researchclaw.llm import create_experiment_llm_client, create_llm_client
 from researchclaw.llm.client import LLMClient
 from researchclaw.prompts import PromptManager
 from researchclaw.pipeline.stages import (
@@ -4038,6 +4038,7 @@ def _execute_result_analysis(
     *,
     llm: LLMClient | None = None,
     prompts: PromptManager | None = None,
+    experiment_llm: LLMClient | None = None,
 ) -> StageResult:
     # --- Collect experiment data ---
     exp_data = _collect_experiment_results(run_dir)
@@ -4458,6 +4459,15 @@ def _execute_result_analysis(
         _pm = prompts or PromptManager()
         from researchclaw.prompts import DEBATE_ROLES_ANALYSIS  # noqa: PLC0415
 
+        # Use experiment LLM (frontier model) for analysis if configured,
+        # otherwise fall back to the main pipeline LLM.
+        analysis_llm = experiment_llm or llm
+        if experiment_llm is not None:
+            logger.info(
+                "Stage 14: Using experiment LLM (%s) for multi-perspective analysis",
+                experiment_llm.config.primary_model,
+            )
+
         # --- Multi-perspective debate ---
         perspectives_dir = stage_dir / "perspectives"
         variables = {
@@ -4466,11 +4476,11 @@ def _execute_result_analysis(
             "context": context,
         }
         perspectives = _multi_perspective_generate(
-            llm, DEBATE_ROLES_ANALYSIS, variables, perspectives_dir
+            analysis_llm, DEBATE_ROLES_ANALYSIS, variables, perspectives_dir
         )
         # --- Synthesize into unified analysis ---
         analysis = _synthesize_perspectives(
-            llm, perspectives, "analysis_synthesize", _pm
+            analysis_llm, perspectives, "analysis_synthesize", _pm
         )
     else:
         # Template with real data if available
@@ -7709,18 +7719,38 @@ def execute_stage(
     except Exception:  # noqa: BLE001
         llm = None
 
+    # Create experiment LLM client for frontier-model evaluation (optional)
+    experiment_llm: LLMClient | None = None
+    if config.experiment_llm.provider:
+        try:
+            experiment_llm = create_experiment_llm_client(config.experiment_llm)
+            if not (experiment_llm.config.base_url and experiment_llm.config.api_key):
+                experiment_llm = None
+        except Exception:  # noqa: BLE001
+            logger.warning("Failed to create experiment LLM client, falling back to pipeline LLM")
+            experiment_llm = None
+
     try:
         _ = advance(stage, StageStatus.PENDING, TransitionEvent.START)
         executor = _STAGE_EXECUTORS[stage]
         prompts = PromptManager(config.prompts.custom_file or None)  # type: ignore[attr-defined]
         try:
             result = executor(
-                stage_dir, run_dir, config, adapters, llm=llm, prompts=prompts
+                stage_dir, run_dir, config, adapters,
+                llm=llm, prompts=prompts, experiment_llm=experiment_llm,
             )
         except TypeError as exc:
-            if "unexpected keyword argument 'prompts'" not in str(exc):
+            if "unexpected keyword argument" not in str(exc):
                 raise
-            result = executor(stage_dir, run_dir, config, adapters, llm=llm)
+            # Fallback for stages that don't accept experiment_llm or prompts
+            try:
+                result = executor(
+                    stage_dir, run_dir, config, adapters, llm=llm, prompts=prompts
+                )
+            except TypeError as exc2:
+                if "unexpected keyword argument 'prompts'" not in str(exc2):
+                    raise
+                result = executor(stage_dir, run_dir, config, adapters, llm=llm)
     except Exception as exc:  # noqa: BLE001
         logger.exception("Stage %s failed", stage.name)
         result = StageResult(

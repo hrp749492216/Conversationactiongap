@@ -46,16 +46,30 @@ def cmd_run(args: argparse.Namespace) -> int:
 
     # --- LLM Preflight ---
     if not skip_preflight:
-        from researchclaw.llm import create_llm_client
+        from researchclaw.llm import create_experiment_llm_client, create_llm_client
 
         client = create_llm_client(config)
-        print("Preflight check...", end=" ", flush=True)
+        print("Preflight check (pipeline LLM)...", end=" ", flush=True)
         ok, msg = client.preflight()
         if ok:
             print(msg)
         else:
             print(f"FAILED — {msg}", file=sys.stderr)
             return 1
+
+        # Experiment LLM preflight (optional — only if configured)
+        if config.experiment_llm.provider:
+            exp_client = create_experiment_llm_client(config.experiment_llm)
+            print("Preflight check (experiment LLM)...", end=" ", flush=True)
+            ok, msg = exp_client.preflight()
+            if ok:
+                print(msg)
+            else:
+                print(f"WARNING — {msg}", file=sys.stderr)
+                print(
+                    "  Experiment evaluation will fall back to the pipeline LLM.",
+                    file=sys.stderr,
+                )
 
     run_id = _generate_run_id(config.research.topic)
     run_dir = Path(output or f"artifacts/{run_id}")

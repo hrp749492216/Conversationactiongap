@@ -437,6 +437,24 @@ def validate_config(
     if not _is_blank(exp_direction) and exp_direction not in ("minimize", "maximize"):
         errors.append(f"Invalid experiment.metric_direction: {exp_direction}")
 
+    # Validate experiment_llm if configured
+    _KNOWN_PROVIDERS = {"openai", "openrouter", "deepseek", "openai-compatible", "acp"}
+    exp_llm_provider = _get_by_path(data, "experiment_llm.provider")
+    if not _is_blank(exp_llm_provider):
+        if exp_llm_provider not in _KNOWN_PROVIDERS:
+            errors.append(
+                f"Invalid experiment_llm.provider: {exp_llm_provider} "
+                f"(expected one of {sorted(_KNOWN_PROVIDERS)})"
+            )
+        exp_llm_key = _get_by_path(data, "experiment_llm.api_key")
+        exp_llm_key_env = _get_by_path(data, "experiment_llm.api_key_env")
+        if _is_blank(exp_llm_key) and _is_blank(exp_llm_key_env):
+            warnings.append(
+                "experiment_llm.provider is set but neither api_key nor "
+                "api_key_env is configured — the experiment LLM client "
+                "will likely fail to authenticate"
+            )
+
     kb_root_raw = _get_by_path(data, "knowledge_base.root")
     if check_paths and not _is_blank(kb_root_raw) and project_root is not None:
         kb_root = project_root / str(kb_root_raw)

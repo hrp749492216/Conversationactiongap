@@ -105,5 +105,23 @@ experiment:
     shm_size_mb: 2048
     keep_containers: false
 
+# ============================================================================
+# Experiment Evaluation LLM (Optional)
+# ============================================================================
+# A separate LLM provider used specifically for evaluating experiment results
+# (Stage 14: RESULT_ANALYSIS). This lets you use a frontier model via
+# OpenRouter for high-quality multi-perspective analysis while keeping the
+# main pipeline on a cheaper/faster model.
+#
+# If omitted or provider is empty, the main 'llm' config is used instead.
+# ============================================================================
+# experiment_llm:
+#   provider: "openrouter"
+#   api_key_env: "OPENROUTER_API_KEY"
+#   primary_model: "anthropic/claude-sonnet-4-20250514"
+#   evaluation_models:
+#     - "google/gemini-2.5-pro"
+#     - "openai/gpt-4.1"
+
 prompts:
   custom_file: ""
