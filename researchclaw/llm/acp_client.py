@@ -204,7 +204,8 @@ class ACPClient:
         result = subprocess.run(
             [acpx, "--approve-all", "--cwd", self._abs_cwd(),
              self.config.agent, "-s", self.config.session_name,
-             prompt],
+             "-f", "-"],
+            input=prompt,
             capture_output=True, text=True,
             timeout=self.config.timeout_sec,
         )

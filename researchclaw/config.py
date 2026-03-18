@@ -223,6 +223,17 @@ class FigureAgentConfig:
 
 
 @dataclass(frozen=True)
+class ExperimentLlmConfig:
+    """LLM config specifically for experiment evaluation against frontier models."""
+
+    provider: str = ""
+    api_key_env: str = ""
+    api_key: str = ""
+    primary_model: str = ""
+    evaluation_models: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
 class ExperimentConfig:
     mode: str = "simulated"
     time_budget_sec: int = 300
@@ -262,6 +273,7 @@ class RCConfig:
     llm: LlmConfig
     security: SecurityConfig = field(default_factory=SecurityConfig)
     experiment: ExperimentConfig = field(default_factory=ExperimentConfig)
+    experiment_llm: ExperimentLlmConfig = field(default_factory=ExperimentLlmConfig)
     export: ExportConfig = field(default_factory=ExportConfig)
     prompts: PromptsConfig = field(default_factory=PromptsConfig)
 
@@ -291,6 +303,7 @@ class RCConfig:
         llm = data["llm"]
         security = data.get("security") or {}
         experiment = data.get("experiment") or {}
+        experiment_llm_data = data.get("experiment_llm") or {}
         export = data.get("export") or {}
         prompts = data.get("prompts") or {}
 
@@ -341,6 +354,15 @@ class RCConfig:
                 redact_sensitive_logs=bool(security.get("redact_sensitive_logs", True)),
             ),
             experiment=_parse_experiment_config(experiment),
+            experiment_llm=ExperimentLlmConfig(
+                provider=experiment_llm_data.get("provider", ""),
+                api_key_env=experiment_llm_data.get("api_key_env", ""),
+                api_key=experiment_llm_data.get("api_key", ""),
+                primary_model=experiment_llm_data.get("primary_model", ""),
+                evaluation_models=tuple(
+                    experiment_llm_data.get("evaluation_models") or ()
+                ),
+            ),
             export=ExportConfig(
                 target_conference=export.get("target_conference", "neurips_2025"),
                 authors=export.get("authors", "Anonymous"),

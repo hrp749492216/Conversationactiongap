@@ -6,7 +6,7 @@ import os
 from typing import TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
-    from researchclaw.config import RCConfig
+    from researchclaw.config import ExperimentLlmConfig, RCConfig
     from researchclaw.llm.acp_client import ACPClient
     from researchclaw.llm.client import LLMClient
 
@@ -66,5 +66,33 @@ def create_llm_client(config: RCConfig) -> LLMClient | ACPClient:
             ),
             primary_model=config.llm.primary_model or "gpt-4o",
             fallback_models=list(config.llm.fallback_models or []),
+        )
+    )
+
+
+def create_experiment_llm_client(
+    experiment_llm: ExperimentLlmConfig,
+) -> LLMClient:
+    """Create an LLM client for experiment evaluation (e.g. OpenRouter).
+
+    This is separate from the pipeline LLM client — it's used by experiment
+    code to call frontier models for evaluation.
+    """
+    from researchclaw.llm.client import LLMClient as _LLM
+    from researchclaw.llm.client import LLMConfig
+
+    preset = PROVIDER_PRESETS.get(experiment_llm.provider, {})
+    base_url = preset.get("base_url") or ""
+
+    return _LLM(
+        LLMConfig(
+            base_url=base_url,
+            api_key=(
+                experiment_llm.api_key
+                or os.environ.get(experiment_llm.api_key_env, "")
+                or ""
+            ),
+            primary_model=experiment_llm.primary_model or "gpt-4o",
+            fallback_models=list(experiment_llm.evaluation_models or []),
         )
     )
