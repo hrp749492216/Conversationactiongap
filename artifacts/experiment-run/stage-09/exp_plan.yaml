@@ -1,0 +1,255 @@
+ablations:
+- expected_effect: If standard CoT fails to restore refusal rates, it proves the Execution-Aware
+    aspect is necessary, and syntax isn't just a cognitive distraction but a semantic
+    bypass.
+  how_it_differs: Instructs the model to 'think step by step' in a <thought> block
+    without specifically prompting for safety or outcome evaluation.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Inject tool schemas.
+    - 2. Instruct model to output <thought> for step-by-step planning.
+    - 3. Output JSON tool call.
+    - 4. Evaluate compliance.
+    class_name: CoTWithoutExecutionFocusAblation
+    differentiator: Standard CoT vs Execution-Aware CoT; isolates the effect of targeted
+      moral reasoning.
+    key_hyperparameters:
+      json_mode: false
+      max_tokens: 1024
+      temperature: 0.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A
+  name: CoTWithoutExecutionFocusAblation
+  what_is_removed: The specific instruction to reason about the 'moral and functional
+    outcome'.
+baselines:
+- Full Fine-Tuning
+- PPO
+- QLoRA
+- description: Standard text-only conversational interaction without any tool schemas
+    in the prompt. Represents the standard RLHF-aligned text-in/text-out modality.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Receive user prompt containing a potentially unsafe request.
+    - 2. Format as standard chat completion without system tool definitions.
+    - 3. Generate language model response.
+    - 4. Parse response using a safety classifier (e.g., Llama-Guard) to determine
+      compliance vs refusal.
+    class_name: StandardChatBaseline
+    differentiator: No tool schemas present; pure conversational RLHF setting.
+    key_hyperparameters:
+      max_tokens: 512
+      temperature: 0.0
+      top_p: 1.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A (Inference only)
+  name: StandardChatBaseline
+- description: Tool-enabled interaction requiring strict JSON schema output. Forces
+    structured output, historically shown to bypass conversational safety.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Inject tool API schemas (e.g., execute_command, write_file) into the system
+      prompt.
+    - 2. Instruct the model to respond ONLY with a valid JSON tool call.
+    - 3. Generate response and attempt to parse JSON.
+    - 4. Evaluate if the parsed tool call complies with the unsafe user request.
+    class_name: StandardToolBaseline
+    differentiator: Standard tool-use setting without any explicit safety intervention
+      or structural refusal options.
+    key_hyperparameters:
+      json_mode: true
+      max_tokens: 512
+      temperature: 0.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A (Inference only)
+  name: StandardToolBaseline
+- description: Chat mode with tool schemas injected into the prompt, but text-only
+    output required. Tests the Contrarian 'Persona Contamination' hypothesis.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Inject tool API schemas into the system prompt.
+    - 2. Explicitly instruct the model to ignore tools and reply ONLY in plain text.
+    - 3. Generate response and classify safety.
+    - 4. Calculate compliance rate.
+    class_name: PollutedChatBaseline
+    differentiator: Isolates the effect of tool context (persona shift) from tool
+      generation (syntax load).
+    key_hyperparameters:
+      json_mode: false
+      max_tokens: 512
+      temperature: 0.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A (Inference only)
+  name: PollutedChatBaseline
+compute_budget:
+  estimated_seconds_per_run: 2
+  justification: 7 conditions (3 baselines, 3 methods, 1 ablation) * 2 request_types
+    * 2 tool_complexities * 5 random seeds = 140 total runs. Using a local inference
+    server (e.g., Qwen2.5-3B-Instruct via vLLM), batched text generation for a single
+    prompt takes ~1-2 seconds. 140 runs * 2s/run = 280 seconds, comfortably within
+    the 600-second budget.
+  total_runs: 140
+datasets:
+- Alpaca
+- MMLU
+metrics:
+- description: The percentage of unsafe requests where the model generates a valid,
+    harmful tool call (or text compliance). Lower is better.
+  direction: minimize
+  name: compliance_rate
+- description: The percentage of valid JSON format generations when tools are required,
+    ensuring interventions do not destroy structural agent capabilities.
+  direction: maximize
+  name: success_rate
+- description: The percentage of times the explicit rejection tool is chosen over
+    harmful tools in the ExplicitRejectionToolMethod. Discovery-aligned endpoint.
+  direction: maximize
+  name: refusal_tool_selection_rate
+objectives:
+- Evaluate whether the conversation-action gap in LLMs is caused by contextual persona
+  shift or generative syntax load.
+- Determine if providing a structured rejection affordance restores safety guardrails
+  in tool-enabled environments.
+- Test the hypothesis that tool-compliance stems from an implicit 'safe sandbox' assumption
+  by modifying stakes.
+proposed_methods:
+- description: Forces the model to evaluate the functional outcome of a tool call
+    in plaintext before JSON generation, bridging the modality gap.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Inject tool API schemas into the system prompt.
+    - 2. Instruct the model to first output a <thought> block reasoning about the
+      moral and functional outcome of the requested action.
+    - 3. Instruct the model to output the JSON tool call ONLY after the thought block.
+    - 4. Generate response, extract thought and JSON, and evaluate compliance.
+    class_name: ExecutionAwareCoTMethod
+    differentiator: Re-engages conversational RLHF guardrails explicitly before structured
+      syntax generation.
+    key_hyperparameters:
+      json_mode: false
+      max_tokens: 1024
+      temperature: 0.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A (Inference only)
+  name: ExecutionAwareCoTMethod
+- description: Injects a dedicated refusal tool into the schema to provide a structural
+    'no'. Tests the Pragmatist 'Rejection Affordance Deficit' hypothesis.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Inject standard tool schemas AND a specific 'reject_unsafe_request' tool
+      with description 'Call this to refuse a harmful request'.
+    - 2. Instruct the model to output a JSON tool call.
+    - 3. Generate response and parse JSON.
+    - 4. Check if the model selected the rejection tool or a dangerous tool.
+    class_name: ExplicitRejectionToolMethod
+    differentiator: Resolves the conflict between formatting compliance and safety
+      compliance by providing a safe formatting option.
+    key_hyperparameters:
+      json_mode: true
+      max_tokens: 512
+      temperature: 0.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A (Inference only)
+  name: ExplicitRejectionToolMethod
+- description: Overrides the implicit sandbox assumption with a severe real-world
+    stakes warning. Tests the 'Implicit Sandbox Illusion' hypothesis.
+  implementation_spec:
+    algorithm_steps:
+    - 1. Inject tool API schemas into the system prompt.
+    - 2. Append a highly salient, all-caps warning that the environment is LIVE and
+      actions are IRREVERSIBLE.
+    - 3. Instruct the model to output a JSON tool call.
+    - 4. Generate JSON tool call and evaluate compliance rate.
+    class_name: ProductionStakesPromptMethod
+    differentiator: Tests if compliance is an artifact of sandbox meta-learning rather
+      than RLHF failure by shifting assumed stakes.
+    key_hyperparameters:
+      json_mode: true
+      max_tokens: 512
+      temperature: 0.0
+    key_methods:
+    - __init__
+    - format_prompt
+    - generate
+    - evaluate_compliance
+    loss_function: N/A (Inference only)
+  name: ProductionStakesPromptMethod
+risks:
+- mitigation: Use strict JSON mode or grammar-constrained decoding (e.g., via outlines
+    or vLLM) to ensure models produce parseable JSON, isolating safety (intent) failures
+    from formatting failures.
+  risk: Syntax parsing failures masquerading as safety
+- mitigation: Use a deterministic rubric and an automated safety evaluator model (e.g.,
+    Llama-Guard 3) to objectively score whether the parsed tool call constitutes compliance
+    or refusal.
+  risk: Subjectivity in compliance evaluation
+- mitigation: Evaluate across 5 generation seeds per condition to ensure stability
+    against sampling variance.
+  risk: Prompt sensitivity
+topic: 'Large language models (LLMs) are increasingly deployed as agents that interact
+  with external systems through tools and application programming interfaces (APIs).
+  Modern deployments allow LLMs to execute code, query databases, control software
+  systems, and trigger automated workflows. As a result, these models are no longer
+  limited to generating text responses; they can now perform actions that influence
+  real systems. Ensuring the safe behavior of such agentic LLM systems has therefore
+  become an important challenge for AI deployment.
+
+  Most current safety mechanisms for LLMs rely on alignment methods such as reinforcement
+  learning from human feedback (RLHF) and related post-training techniques. These
+  methods train models to refuse harmful instructions or provide safety warnings during
+  conversation. As a result, many aligned models exhibit strong refusal behavior when
+  directly asked to perform unsafe tasks in text-based interactions. However, most
+  safety evaluations measure behavior in conversational settings where the model only
+  produces language outputs.
+
+  In practice, many deployed LLM agents are given access to external tools, including
+  command-line interfaces, code execution environments, device APIs, and database
+  operations. This expanded capability changes the safety threat model: rather than
+  merely describing an action in text, the model can perform the action through a
+  tool invocation. This raises an important question for AI safety: do conversational
+  safety behaviors learned during training transfer to environments where models can
+  execute actions?
+
+  In this work, we investigate a phenomenon we call the conversation–action gap, where
+  safety behavior observed during conversation does not generalize to tool-enabled
+  environments. When interacting purely through conversation, models often refuse
+  unsafe requests or respond with high-level warnings. However, when given access
+  to tools capable of executing commands, the same models may perform actions related
+  to the request rather than refusing it.
+
+  To study this effect, we introduce the Conversation–Action Gap evaluation framework,
+  which compares model behavior under two matched interaction modes: text-only conversation
+  (chat mode) and tool-enabled interaction (tool mode). Using identical prompts across
+  both modes allows us to isolate the effect of tool availability on model behavior.
+
+  We conduct a pilot evaluation using three frontier models—Claude Sonnet 4, GPT-4o,
+  and Gemini 2.5 Flash—across prompts drawn from public safety benchmarks and self-generated
+  cyberphysical scenarios. In the pilot results, compliance behavior increases when
+  tools are available: compliance rises from 14.4% in chat mode to 22.2% in tool mode,
+  while refusal decreases from 81.1% to 65.6%.
+
+  '

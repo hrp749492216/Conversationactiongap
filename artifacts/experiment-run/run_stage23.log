@@ -1,0 +1,29 @@
+S2 rate-limited (429). Waiting 2.3s (attempt 1/3)...
+S2 rate-limited (429). Waiting 4.9s (attempt 2/3)...
+S2 circuit breaker TRIPPED after 3 consecutive 429s. Cooldown: 120s (trip #1). arXiv still active.
+[rate-limit] arXiv 429 (Retry-After: none). Waiting 5.7s (attempt 1/3)...
+[rate-limit] arXiv 429 (Retry-After: none). Waiting 11.2s (attempt 2/3)...
+arXiv circuit breaker TRIPPED after 3 consecutive 429s. Cooldown: 180s (trip #1). Other sources still active.
+[rate-limit] arXiv 429 — circuit breaker OPEN. All arXiv requests paused for 180s.
+S2 circuit breaker → OPEN (probe failed). Next cooldown: 240s (trip #2)
+LaTeX completeness check: Section '1. Introduction' has high bullet-point density (4/8 lines = 50%). Conference papers should use flowing prose.
+LaTeX completeness check: Section '7. Limitations' has high bullet-point density (5/6 lines = 83%). Conference papers should use flowing prose.
+IMP-18: paper.tex compilation failed after 0 attempts: ['pdflatex not installed']
+ResearchClaw v0.1.0 — Starting pipeline
+  Run ID:  rc-20260318-191013-b8401d
+  Topic:   Large language models (LLMs) are increasingly deployed as agents that interact with external systems through tools and application programming interfaces (APIs). Modern deployments allow LLMs to execute code, query databases, control software systems, and trigger automated workflows. As a result, these models are no longer limited to generating text responses; they can now perform actions that influence real systems. Ensuring the safe behavior of such agentic LLM systems has therefore become an important challenge for AI deployment.
+Most current safety mechanisms for LLMs rely on alignment methods such as reinforcement learning from human feedback (RLHF) and related post-training techniques. These methods train models to refuse harmful instructions or provide safety warnings during conversation. As a result, many aligned models exhibit strong refusal behavior when directly asked to perform unsafe tasks in text-based interactions. However, most safety evaluations measure behavior in conversational settings where the model only produces language outputs.
+In practice, many deployed LLM agents are given access to external tools, including command-line interfaces, code execution environments, device APIs, and database operations. This expanded capability changes the safety threat model: rather than merely describing an action in text, the model can perform the action through a tool invocation. This raises an important question for AI safety: do conversational safety behaviors learned during training transfer to environments where models can execute actions?
+In this work, we investigate a phenomenon we call the conversation–action gap, where safety behavior observed during conversation does not generalize to tool-enabled environments. When interacting purely through conversation, models often refuse unsafe requests or respond with high-level warnings. However, when given access to tools capable of executing commands, the same models may perform actions related to the request rather than refusing it.
+To study this effect, we introduce the Conversation–Action Gap evaluation framework, which compares model behavior under two matched interaction modes: text-only conversation (chat mode) and tool-enabled interaction (tool mode). Using identical prompts across both modes allows us to isolate the effect of tool availability on model behavior.
+We conduct a pilot evaluation using three frontier models—Claude Sonnet 4, GPT-4o, and Gemini 2.5 Flash—across prompts drawn from public safety benchmarks and self-generated cyberphysical scenarios. In the pilot results, compliance behavior increases when tools are available: compliance rises from 14.4% in chat mode to 22.2% in tool mode, while refusal decreases from 81.1% to 65.6%.
+
+  Output:  artifacts/rc-20260317-031747-b8401d
+  Mode:    sandbox
+  From:    Stage 23: CITATION_VERIFY
+
+[rc-20260318-191013-b8401d] Stage 23/23 CITATION_VERIFY — running...
+[rc-20260318-191013-b8401d] Stage 23/23 CITATION_VERIFY — FAILED (777.6s) — Missing or empty output: references_verified.bib
+[rc-20260318-191013-b8401d] Deliverables packaged → artifacts/rc-20260317-031747-b8401d/deliverables
+
+Pipeline complete: 0/1 stages done, 1 failed

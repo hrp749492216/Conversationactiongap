@@ -12,8 +12,8 @@ workspaces/
 !.claude/skills/**/SKILL.md
 .claude/settings.local.json
 
-# Experiment run artifacts (local only)
-artifacts/
+# Experiment run artifacts (local only — but we track the published run)
+# artifacts/
 output/
 experiment_metaclaw/
 promotional/
@@ -76,4 +76,4 @@ cli_pause
 重试一次
 
 .venv_arc/
-/config.arc.yaml
+# /config.arc.yaml  — tracked (API key redacted)

@@ -1,0 +1,104 @@
+{
+  "metrics": {
+    "StandardChatBaseline_compliance_rate": 0.3673469387755102,
+    "StandardChatBaseline_success_rate": 0.996078431372549,
+    "StandardChatBaseline_refusal_tool_rate": 0.0,
+    "StandardToolBaseline_compliance_rate": 0.3040816326530612,
+    "StandardToolBaseline_success_rate": 0.996078431372549,
+    "StandardToolBaseline_refusal_tool_rate": 0.0,
+    "PollutedChatBaseline_compliance_rate": 0.726530612244898,
+    "PollutedChatBaseline_success_rate": 0.996078431372549,
+    "PollutedChatBaseline_refusal_tool_rate": 0.0,
+    "ExecutionAwareCoTMethod_compliance_rate": 0.0,
+    "ExecutionAwareCoTMethod_success_rate": 0.996078431372549,
+    "ExecutionAwareCoTMethod_refusal_tool_rate": 0.0,
+    "ExplicitRejectionToolMethod_compliance_rate": 0.0,
+    "ExplicitRejectionToolMethod_success_rate": 0.049019607843137254,
+    "ExplicitRejectionToolMethod_refusal_tool_rate": 1.0,
+    "ProductionStakesPromptMethod_compliance_rate": 0.0,
+    "ProductionStakesPromptMethod_success_rate": 0.10784313725490195,
+    "ProductionStakesPromptMethod_refusal_tool_rate": 0.0,
+    "CoTWithoutExecutionFocusAblation_compliance_rate": 0.9979591836734694,
+    "CoTWithoutExecutionFocusAblation_success_rate": 0.996078431372549,
+    "CoTWithoutExecutionFocusAblation_refusal_tool_rate": 0.0
+  },
+  "elapsed_sec": 35.24,
+  "time_budget_sec": 600,
+  "steps_completed": 0,
+  "nan_count": 0,
+  "hyperparameters": {
+    "learning_rate": 0.05,
+    "batch_size": 32,
+    "pretrain_epochs": 15,
+    "align_epochs": 15,
+    "input_dim": 16,
+    "hidden_dim": 64,
+    "context_dim": 4,
+    "tool_schema_bias": 15.0
+  },
+  "summary": {
+    "StandardChatBaseline": {
+      "compliance_rate_mean": 0.3673469387755102,
+      "compliance_rate_std": 0.07904047645321259,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    },
+    "StandardToolBaseline": {
+      "compliance_rate_mean": 0.3040816326530612,
+      "compliance_rate_std": 0.10047782551094833,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    },
+    "PollutedChatBaseline": {
+      "compliance_rate_mean": 0.726530612244898,
+      "compliance_rate_std": 0.08571428571428569,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    },
+    "ExecutionAwareCoTMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    },
+    "ExplicitRejectionToolMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.049019607843137254,
+      "success_rate_std": 0.0575014835239811,
+      "refusal_tool_selection_rate_mean": 1.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    },
+    "ProductionStakesPromptMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.10784313725490195,
+      "success_rate_std": 0.06532678921159875,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    },
+    "CoTWithoutExecutionFocusAblation": {
+      "compliance_rate_mean": 0.9979591836734694,
+      "compliance_rate_std": 0.004081632653061229,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 5
+    }
+  }
+}

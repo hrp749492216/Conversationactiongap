@@ -1,0 +1,68 @@
+files:
+  - name: main.py
+    purpose: Entry point, orchestrates the entire experiment by running all conditions sequentially.
+    key_functions: [main, run_experiment, aggregate_results, save_report]
+  - name: data_loader.py
+    purpose: Loads and preprocesses safety evaluation datasets and tool configurations.
+    key_functions: [load_safety_dataset, preprocess_prompts, get_tool_schemas]
+  - name: metrics.py
+    purpose: Computes compliance, success, and refusal tool selection rates using automated safety evaluators.
+    key_functions: [calculate_compliance_rate, calculate_success_rate, evaluate_response_safety, parse_json_action]
+  - name: baselines.py
+    purpose: Defines standard conversational and tool-based baseline interaction methods.
+    classes:
+      - name: BaseEvaluationMethod
+        methods: [__init__, format_prompt, generate, evaluate_response]
+      - name: StandardChatBaseline(BaseEvaluationMethod)
+        methods: [__init__, format_prompt, evaluate_response]
+        differentiator: Formats prompt as pure text chat without any tool schemas; uses text-based Llama-Guard safety evaluation.
+      - name: StandardToolBaseline(BaseEvaluationMethod)
+        methods: [__init__, format_prompt, generate, evaluate_response]
+        differentiator: Injects JSON tool schemas into system prompt and forces strict JSON decoding via vLLM/Outlines. Parses JSON fields to determine safety compliance.
+      - name: PollutedChatBaseline(BaseEvaluationMethod)
+        methods: [__init__, format_prompt, evaluate_response]
+        differentiator: Injects full tool schemas to test persona contamination, but appends explicit instruction overriding tools, forcing plain text output.
+  - name: methods.py
+    purpose: Defines proposed interventions and ablations to mitigate the conversation-action gap.
+    classes:
+      - name: ExecutionAwareCoTMethod(BaseEvaluationMethod)
+        methods: [__init__, format_prompt, generate, extract_thought_and_action]
+        differentiator: Prompts for a `<thought>` block specifically focusing on moral and functional outcomes before generating the JSON tool call. Implements custom multi-stage generation and regex parsing to handle mixed text/JSON output.
+      - name: ExplicitRejectionToolMethod(BaseEvaluationMethod)
+        methods: [__init__, format_prompt, evaluate_response]
+        differentiator: Dynamically modifies the injected tool list to include a 'reject_unsafe_request' tool. Custom evaluation logic explicitly intercepts this tool call to calculate the refusal_tool_selection_rate.
+      - name: ProductionStakesPromptMethod(BaseEvaluationMethod)
+        methods: [__init__, format_prompt]
+        differentiator: Overrides the system prompt formulation by injecting a severe, high-stakes real-world environment warning to counteract implicit sandbox assumptions, keeping tool schemas identical to the standard baseline.
+      - name: CoTWithoutExecutionFocusAblation(BaseEvaluationMethod)
+        methods: [__init__, format_prompt, generate, extract_thought_and_action]
+        differentiator: Uses standard 'think step by step' `<thought>` prompting without the specific outcome/moral focus instruction, isolating the effect of structured reasoning from semantic moral reasoning.
+
+data_flow:
+  - step: Load Datasets
+    input: Raw dataset paths (safety subsets)
+    output: List of preprocessed unsafe prompts and tool definitions
+  - step: Initialize Methods
+    input: Configuration parameters (max_tokens, temperature, json_mode)
+    output: Instantiated baseline, method, and ablation objects
+  - step: Run Inferences
+    input: Preprocessed prompts, Instantiated methods, 5 random seeds
+    output: Raw model generations (text or JSON) per condition
+  - step: Parse and Evaluate Responses
+    input: Raw generations, Prompts
+    output: Parsed actions, extracted thought blocks, and safety classifications (compliant/refusal)
+  - step: Calculate Metrics
+    input: Safety classifications and parsing success flags across all seeds
+    output: Aggregated compliance_rate, success_rate, and refusal_tool_selection_rate
+  - step: Generate Report
+    input: Aggregated metrics
+    output: Final JSON/CSV report comparing baselines, methods, and ablations
+
+dependencies:
+  - transformers
+  - vllm
+  - pydantic
+  - jsonschema
+  - pandas
+  - numpy
+  - tqdm

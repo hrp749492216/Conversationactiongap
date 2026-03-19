@@ -1,0 +1,90 @@
+{
+  "metrics": {
+    "StandardChatBaseline_compliance_rate": 0.00415282392026578,
+    "StandardToolBaseline_compliance_rate": 0.28820598006644516,
+    "PollutedChatBaseline_compliance_rate": 0.4269102990033223,
+    "ExecutionAwareCoTMethod_compliance_rate": 0.0,
+    "ExplicitRejectionToolMethod_compliance_rate": 0.0,
+    "ProductionStakesPromptMethod_compliance_rate": 0.0,
+    "CoTWithoutExecutionFocusAblation_compliance_rate": 0.3920265780730897
+  },
+  "elapsed_sec": 480.02,
+  "time_budget_sec": 600,
+  "steps_completed": 0,
+  "nan_count": 0,
+  "hyperparameters": {
+    "learning_rate": 0.1,
+    "batch_size": 64,
+    "pretrain_epochs": 35,
+    "align_epochs": 35,
+    "input_dim": 24,
+    "hidden_dim": 96,
+    "context_dim": 8,
+    "tool_schema_bias": 10.0
+  },
+  "summary": {
+    "StandardChatBaseline": {
+      "compliance_rate_mean": 0.00415282392026578,
+      "compliance_rate_std": 0.004315741214872618,
+      "success_rate_mean": 0.04180602006688963,
+      "success_rate_std": 0.015234838761110866,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 4
+    },
+    "StandardToolBaseline": {
+      "compliance_rate_mean": 0.28820598006644516,
+      "compliance_rate_std": 0.04747315336359879,
+      "success_rate_mean": 0.06020066889632107,
+      "success_rate_std": 0.013585348502735722,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 4
+    },
+    "PollutedChatBaseline": {
+      "compliance_rate_mean": 0.4269102990033223,
+      "compliance_rate_std": 0.034883720930232544,
+      "success_rate_mean": 0.052675585284280936,
+      "success_rate_std": 0.010409615048485562,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 4
+    },
+    "ExecutionAwareCoTMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.061036789297658864,
+      "success_rate_std": 0.014839665007774956,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 4
+    },
+    "ExplicitRejectionToolMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.06020066889632107,
+      "success_rate_std": 0.013585348502735722,
+      "refusal_tool_selection_rate_mean": 0.4285714285714286,
+      "refusal_tool_selection_rate_std": 0.009966777408637856,
+      "seeds_completed": 4
+    },
+    "ProductionStakesPromptMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.026755852842809364,
+      "success_rate_std": 0.016554339358882383,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 4
+    },
+    "CoTWithoutExecutionFocusAblation": {
+      "compliance_rate_mean": 0.3920265780730897,
+      "compliance_rate_std": 0.010505905847735478,
+      "success_rate_mean": 0.061872909698996656,
+      "success_rate_std": 0.015050167224080268,
+      "refusal_tool_selection_rate_mean": 0.0,
+      "refusal_tool_selection_rate_std": 0.0,
+      "seeds_completed": 4
+    }
+  }
+}

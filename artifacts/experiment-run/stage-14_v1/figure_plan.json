@@ -1,0 +1,50 @@
+[
+  {
+    "figure_id": "fig_baseline_gap",
+    "chart_type": "bar_comparison",
+    "title": "Baseline Conversation-Action Gap",
+    "caption": "Comparison of compliance rates across standard chat, tool-enabled, and polluted chat baselines. This illustrates the baseline vulnerability levels across different interaction modalities prior to any mitigations.",
+    "data_source": "StandardChatBaseline_compliance_rate, StandardToolBaseline_compliance_rate, PollutedChatBaseline_compliance_rate",
+    "x_label": "Interaction Mode (Baseline)",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 1,
+    "section": "results"
+  },
+  {
+    "figure_id": "fig_main_mitigations",
+    "chart_type": "bar_comparison",
+    "title": "Effectiveness of Inference-Time Mitigations",
+    "caption": "Impact of proposed mitigations—Execution-Aware CoT, Explicit Rejection Tool, and Production Stakes Prompting—on reducing unsafe compliance compared to the standard tool baseline.",
+    "data_source": "StandardToolBaseline_compliance_rate, ExecutionAwareCoTMethod_compliance_rate, ExplicitRejectionToolMethod_compliance_rate, ProductionStakesPromptMethod_compliance_rate",
+    "x_label": "Mitigation Strategy",
+    "y_label": "Compliance Rate",
+    "width": "double_column",
+    "priority": 1,
+    "section": "results"
+  },
+  {
+    "figure_id": "fig_cot_ablation",
+    "chart_type": "bar_comparison",
+    "title": "Ablation of Execution-Aware Reasoning",
+    "caption": "An ablation study isolating the effect of 'Execution-Aware' reasoning. It compares standard Chain-of-Thought (without execution focus) against Execution-Aware CoT to demonstrate the necessity of functional outcome evaluation.",
+    "data_source": "CoTWithoutExecutionFocusAblation_compliance_rate, ExecutionAwareCoTMethod_compliance_rate",
+    "x_label": "Reasoning Method",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 2,
+    "section": "analysis"
+  },
+  {
+    "figure_id": "fig_alignment_training",
+    "chart_type": "training_curve",
+    "title": "Model Alignment Convergence",
+    "caption": "Training history tracking the convergence of the model during the simulated alignment phase, demonstrating the stabilization of internal loss metrics across training epochs.",
+    "data_source": "training_history_loss_metrics",
+    "x_label": "Training Epochs",
+    "y_label": "Loss",
+    "width": "single_column",
+    "priority": 3,
+    "section": "method"
+  }
+]

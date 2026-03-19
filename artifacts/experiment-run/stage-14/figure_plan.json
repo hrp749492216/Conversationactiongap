@@ -1,0 +1,62 @@
+[
+  {
+    "figure_id": "fig_conversation_action_gap",
+    "chart_type": "bar_comparison",
+    "title": "The Conversation-Action Gap in Standard Baselines",
+    "caption": "Comparison of compliance rates on unsafe requests between standard text-only chat and tool-enabled interactions. The results reveal a significant vulnerability, where models perfectly refuse unsafe tasks in chat (0.0% compliance) but readily comply when given tool access (31.7% compliance).",
+    "data_source": "StandardChatBaseline/compliance_rate vs StandardToolBaseline/compliance_rate",
+    "x_label": "Interaction Mode",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 1,
+    "section": "method"
+  },
+  {
+    "figure_id": "fig_main_mitigation_results",
+    "chart_type": "grouped_bar",
+    "title": "Effectiveness of Safety Mitigation Methods in Tool Mode",
+    "caption": "Main comparison of proposed safety mitigation strategies against the standard tool baseline. Execution-Aware Chain-of-Thought (CoT) completely eliminates the conversation-action gap (0.0% compliance) while Explicit Rejection and Production Stakes methods significantly reduce it (1.7% compliance), balancing safety and functional success.",
+    "data_source": "StandardToolBaseline, ExecutionAwareCoTMethod, ExplicitRejectionToolMethod, ProductionStakesPromptMethod (metrics: compliance_rate, success_rate)",
+    "x_label": "Evaluation Condition",
+    "y_label": "Rate (%)",
+    "width": "double_column",
+    "priority": 1,
+    "section": "results"
+  },
+  {
+    "figure_id": "fig_execution_focus_ablation",
+    "chart_type": "ablation_grouped",
+    "title": "Ablation Study: The Role of Execution Focus in CoT",
+    "caption": "Ablation results demonstrating that standard reasoning without an explicit focus on execution risks (CoT Without Execution Focus) allows a 6.7% compliance rate. This highlights that execution-awareness is the critical component for bridging the safety gap in tool-enabled environments.",
+    "data_source": "StandardToolBaseline/compliance_rate, CoTWithoutExecutionFocusAblation/compliance_rate, ExecutionAwareCoTMethod/compliance_rate",
+    "x_label": "Ablation Setting",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 1,
+    "section": "analysis"
+  },
+  {
+    "figure_id": "fig_alignment_training_curve",
+    "chart_type": "training_curve",
+    "title": "Safety Alignment Training Dynamics: Chat vs. Tool Modes",
+    "caption": "Training curve illustrating the evolution of the compliance rate over alignment training steps. The model rapidly learns to refuse unsafe conversational prompts, while resistance to unsafe tool invocations requires significantly longer optimization, visually depicting the training latency of the conversation-action gap.",
+    "data_source": "compliance_rate over training steps for Chat and Tool modes",
+    "x_label": "Training Steps",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 2,
+    "section": "results"
+  },
+  {
+    "figure_id": "fig_polluted_chat_analysis",
+    "chart_type": "bar_comparison",
+    "title": "Impact of Prompt Pollution on Chat Mode Compliance",
+    "caption": "Analysis of the Polluted Chat Baseline demonstrating that injecting distractor text or complex formatting slightly degrades conversational refusal (1.7% compliance) compared to the standard chat baseline, providing context for the baseline vulnerabilities.",
+    "data_source": "StandardChatBaseline/compliance_rate vs PollutedChatBaseline/compliance_rate",
+    "x_label": "Chat Condition",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 3,
+    "section": "analysis"
+  }
+]

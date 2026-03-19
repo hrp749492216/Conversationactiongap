@@ -1,0 +1,38 @@
+[
+  {
+    "figure_id": "fig_baseline_comparison",
+    "chart_type": "bar_comparison",
+    "title": "Baseline Compliance Rates: Chat vs. Tool Mode",
+    "caption": "Comparison of compliance rates across conversational and tool-enabled baselines to evaluate the conversation-action gap. Shows the foundational differences in safety behavior prior to any interventions.",
+    "data_source": "StandardChatBaseline_compliance_rate, StandardToolBaseline_compliance_rate, PollutedChatBaseline_compliance_rate",
+    "x_label": "Interaction Mode",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 1,
+    "section": "results"
+  },
+  {
+    "figure_id": "fig_mitigation_interventions",
+    "chart_type": "bar_comparison",
+    "title": "Effectiveness of Inference-Time Mitigations",
+    "caption": "Evaluating the compliance reduction of proposed inference-time mitigations. Highlights the success of explicit rejection tools and Execution-Aware CoT in substantially lowering unsafe compliance compared to the standard tool baseline.",
+    "data_source": "StandardToolBaseline_compliance_rate, ExecutionAwareCoTMethod_compliance_rate, ExplicitRejectionToolMethod_compliance_rate, ProductionStakesPromptMethod_compliance_rate",
+    "x_label": "Intervention Strategy",
+    "y_label": "Compliance Rate",
+    "width": "double_column",
+    "priority": 1,
+    "section": "results"
+  },
+  {
+    "figure_id": "fig_cot_ablation",
+    "chart_type": "ablation_grouped",
+    "title": "Ablation of Execution Focus in CoT",
+    "caption": "Ablation study comparing generic Chain-of-Thought (without execution focus) to Execution-Aware CoT. This isolates the specific impact of evaluating functional outcomes in plaintext prior to JSON generation.",
+    "data_source": "CoTWithoutExecutionFocusAblation_compliance_rate, ExecutionAwareCoTMethod_compliance_rate",
+    "x_label": "Chain-of-Thought Variant",
+    "y_label": "Compliance Rate",
+    "width": "single_column",
+    "priority": 2,
+    "section": "analysis"
+  }
+]

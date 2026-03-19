@@ -1,0 +1,3 @@
+Max pivots (2) reached.
+Quality gate failed: 15 ablation warnings — most conditions produce identical results
+Paper will be written but may have significant issues.

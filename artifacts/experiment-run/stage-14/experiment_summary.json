@@ -1,0 +1,252 @@
+{
+  "metrics_summary": {
+    "StandardChatBaseline/compliance_rate": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "count": 1
+    },
+    "compliance_rate": {
+      "min": 0.316667,
+      "max": 0.316667,
+      "mean": 0.316667,
+      "count": 1
+    },
+    "StandardChatBaseline/success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    },
+    "success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    },
+    "StandardToolBaseline/compliance_rate": {
+      "min": 0.316667,
+      "max": 0.316667,
+      "mean": 0.316667,
+      "count": 1
+    },
+    "StandardToolBaseline/success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    },
+    "PollutedChatBaseline/compliance_rate": {
+      "min": 0.016667,
+      "max": 0.016667,
+      "mean": 0.016667,
+      "count": 1
+    },
+    "PollutedChatBaseline/success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    },
+    "ExecutionAwareCoTMethod/compliance_rate": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "count": 1
+    },
+    "ExecutionAwareCoTMethod/success_rate": {
+      "min": 0.966667,
+      "max": 0.966667,
+      "mean": 0.966667,
+      "count": 1
+    },
+    "ExplicitRejectionToolMethod/compliance_rate": {
+      "min": 0.016667,
+      "max": 0.016667,
+      "mean": 0.016667,
+      "count": 1
+    },
+    "ExplicitRejectionToolMethod/success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    },
+    "ProductionStakesPromptMethod/compliance_rate": {
+      "min": 0.016667,
+      "max": 0.016667,
+      "mean": 0.016667,
+      "count": 1
+    },
+    "ProductionStakesPromptMethod/success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    },
+    "CoTWithoutExecutionFocusAblation/compliance_rate": {
+      "min": 0.066667,
+      "max": 0.066667,
+      "mean": 0.066667,
+      "count": 1
+    },
+    "CoTWithoutExecutionFocusAblation/success_rate": {
+      "min": 1.0,
+      "max": 1.0,
+      "mean": 1.0,
+      "count": 1
+    }
+  },
+  "total_runs": 1,
+  "best_run": {
+    "run_id": "iterative-refine-best",
+    "task_id": "sandbox-main",
+    "status": "completed",
+    "metrics": {
+      "StandardChatBaseline/compliance_rate": 0.0,
+      "compliance_rate": 0.31666666666666665,
+      "StandardChatBaseline/success_rate": 1.0,
+      "success_rate": 1.0,
+      "StandardToolBaseline/compliance_rate": 0.31666666666666665,
+      "StandardToolBaseline/success_rate": 1.0,
+      "PollutedChatBaseline/compliance_rate": 0.016666666666666666,
+      "PollutedChatBaseline/success_rate": 1.0,
+      "ExecutionAwareCoTMethod/compliance_rate": 0.0,
+      "ExecutionAwareCoTMethod/success_rate": 0.9666666666666667,
+      "ExplicitRejectionToolMethod/compliance_rate": 0.016666666666666666,
+      "ExplicitRejectionToolMethod/success_rate": 1.0,
+      "ProductionStakesPromptMethod/compliance_rate": 0.016666666666666666,
+      "ProductionStakesPromptMethod/success_rate": 1.0,
+      "CoTWithoutExecutionFocusAblation/compliance_rate": 0.06666666666666667,
+      "CoTWithoutExecutionFocusAblation/success_rate": 1.0
+    },
+    "elapsed_sec": 1936.6407642159993,
+    "stdout": "",
+    "stderr": "",
+    "timed_out": false,
+    "condition_count": 16
+  },
+  "latex_table": "\\begin{table}[h]\n\\centering\n\\caption{Experiment Results (Best Refinement Iteration)}\n\\begin{tabular}{lrrrr}\n\\hline\nMetric & Min & Max & Mean & N \\\\\n\\hline\nCoTWithoutExecutionFocusAblation/compliance_rate & 0.0667 & 0.0667 & 0.0667 & 1 \\\\\nCoTWithoutExecutionFocusAblation/success_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\nExecutionAwareCoTMethod/compliance_rate & 0.0000 & 0.0000 & 0.0000 & 1 \\\\\nExecutionAwareCoTMethod/success_rate & 0.9667 & 0.9667 & 0.9667 & 1 \\\\\nExplicitRejectionToolMethod/compliance_rate & 0.0167 & 0.0167 & 0.0167 & 1 \\\\\nExplicitRejectionToolMethod/success_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\nPollutedChatBaseline/compliance_rate & 0.0167 & 0.0167 & 0.0167 & 1 \\\\\nPollutedChatBaseline/success_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\nProductionStakesPromptMethod/compliance_rate & 0.0167 & 0.0167 & 0.0167 & 1 \\\\\nProductionStakesPromptMethod/success_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\nStandardChatBaseline/compliance_rate & 0.0000 & 0.0000 & 0.0000 & 1 \\\\\nStandardChatBaseline/success_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\nStandardToolBaseline/compliance_rate & 0.3167 & 0.3167 & 0.3167 & 1 \\\\\nStandardToolBaseline/success_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\ncompliance_rate & 0.3167 & 0.3167 & 0.3167 & 1 \\\\\nsuccess_rate & 1.0000 & 1.0000 & 1.0000 & 1 \\\\\n\\hline\n\\end{tabular}\n\\end{table}",
+  "generated": "2026-03-18T21:49:03+00:00",
+  "ablation_warnings": [
+    "ABLATION FAILURE: Conditions 'CoTWithoutExecutionFocusAblation' and 'ExplicitRejectionToolMethod' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'CoTWithoutExecutionFocusAblation' and 'PollutedChatBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'CoTWithoutExecutionFocusAblation' and 'ProductionStakesPromptMethod' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'CoTWithoutExecutionFocusAblation' and 'StandardChatBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'CoTWithoutExecutionFocusAblation' and 'StandardToolBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'ExplicitRejectionToolMethod' and 'PollutedChatBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'ExplicitRejectionToolMethod' and 'ProductionStakesPromptMethod' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'ExplicitRejectionToolMethod' and 'StandardChatBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'ExplicitRejectionToolMethod' and 'StandardToolBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'PollutedChatBaseline' and 'ProductionStakesPromptMethod' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'PollutedChatBaseline' and 'StandardChatBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'PollutedChatBaseline' and 'StandardToolBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'ProductionStakesPromptMethod' and 'StandardChatBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'ProductionStakesPromptMethod' and 'StandardToolBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code.",
+    "ABLATION FAILURE: Conditions 'StandardChatBaseline' and 'StandardToolBaseline' produce identical outputs across all 2 metrics. The ablation is invalid \u2014 the differentiating parameter is likely not used in the code."
+  ],
+  "condition_summaries": {
+    "StandardChatBaseline": {
+      "metrics": {
+        "compliance_rate": 0.0,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "StandardToolBaseline": {
+      "metrics": {
+        "compliance_rate": 0.31666666666666665,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "PollutedChatBaseline": {
+      "metrics": {
+        "compliance_rate": 0.016666666666666666,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "ExecutionAwareCoTMethod": {
+      "metrics": {
+        "compliance_rate": 0.0,
+        "success_rate": 0.9666666666666667
+      },
+      "success_rate": 0.9666666666666667
+    },
+    "ExplicitRejectionToolMethod": {
+      "metrics": {
+        "compliance_rate": 0.016666666666666666,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "ProductionStakesPromptMethod": {
+      "metrics": {
+        "compliance_rate": 0.016666666666666666,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "CoTWithoutExecutionFocusAblation": {
+      "metrics": {
+        "compliance_rate": 0.06666666666666667,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    }
+  },
+  "condition_metrics": {
+    "StandardChatBaseline": {
+      "metrics": {
+        "compliance_rate": 0.0,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "StandardToolBaseline": {
+      "metrics": {
+        "compliance_rate": 0.31666666666666665,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "PollutedChatBaseline": {
+      "metrics": {
+        "compliance_rate": 0.016666666666666666,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "ExecutionAwareCoTMethod": {
+      "metrics": {
+        "compliance_rate": 0.0,
+        "success_rate": 0.9666666666666667
+      },
+      "success_rate": 0.9666666666666667
+    },
+    "ExplicitRejectionToolMethod": {
+      "metrics": {
+        "compliance_rate": 0.016666666666666666,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "ProductionStakesPromptMethod": {
+      "metrics": {
+        "compliance_rate": 0.016666666666666666,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    },
+    "CoTWithoutExecutionFocusAblation": {
+      "metrics": {
+        "compliance_rate": 0.06666666666666667,
+        "success_rate": 1.0
+      },
+      "success_rate": 1.0
+    }
+  },
+  "total_conditions": 7,
+  "total_metric_keys": 16
+}

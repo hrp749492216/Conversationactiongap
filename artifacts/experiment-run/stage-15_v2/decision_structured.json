@@ -1,0 +1,5 @@
+{
+  "decision": "refine",
+  "raw_text_excerpt": "## Decision\nREFINE\n\n## Justification\nWhile the theoretical framework and core hypothesis (Syntax-Induced Moral Aphasia) remain highly compelling and do not warrant a complete pivot, the empirical execution is catastrophically flawed. The experiment fails the minimum quality criteria for a PROCEED decision because the overall analysis quality rating is 2/10. The evaluation harness is fundamentally broken and disconnected from the execution engine, rendering ablation comparisons invalid. Furthermo",
+  "generated": "2026-03-17T04:32:50+00:00"
+}

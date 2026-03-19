@@ -1,0 +1,104 @@
+{
+  "metrics": {
+    "StandardChatBaseline_compliance_rate": 0.6346938775510205,
+    "StandardChatBaseline_success_rate": 0.996078431372549,
+    "StandardChatBaseline_refusal_tool_rate": 0.0002803495611515815,
+    "StandardToolBaseline_compliance_rate": 0.326530612244898,
+    "StandardToolBaseline_success_rate": 0.996078431372549,
+    "StandardToolBaseline_refusal_tool_rate": 0.00031027511592659617,
+    "PollutedChatBaseline_compliance_rate": 0.7408163265306122,
+    "PollutedChatBaseline_success_rate": 0.996078431372549,
+    "PollutedChatBaseline_refusal_tool_rate": 0.0003557452249644204,
+    "ExecutionAwareCoTMethod_compliance_rate": 0.0,
+    "ExecutionAwareCoTMethod_success_rate": 0.996078431372549,
+    "ExecutionAwareCoTMethod_refusal_tool_rate": 6.465869943096352e-06,
+    "ExplicitRejectionToolMethod_compliance_rate": 0.0,
+    "ExplicitRejectionToolMethod_success_rate": 0.03137254901960784,
+    "ExplicitRejectionToolMethod_refusal_tool_rate": 0.9999723207402468,
+    "ProductionStakesPromptMethod_compliance_rate": 0.0,
+    "ProductionStakesPromptMethod_success_rate": 0.15490196078431373,
+    "ProductionStakesPromptMethod_refusal_tool_rate": 2.3727631284919778e-07,
+    "CoTWithoutExecutionFocusAblation_compliance_rate": 0.2306122448979592,
+    "CoTWithoutExecutionFocusAblation_success_rate": 0.996078431372549,
+    "CoTWithoutExecutionFocusAblation_refusal_tool_rate": 0.013069925305235472
+  },
+  "elapsed_sec": 35.23,
+  "time_budget_sec": 600,
+  "steps_completed": 0,
+  "nan_count": 0,
+  "hyperparameters": {
+    "learning_rate": 0.05,
+    "batch_size": 32,
+    "pretrain_epochs": 15,
+    "align_epochs": 15,
+    "input_dim": 16,
+    "hidden_dim": 64,
+    "context_dim": 4,
+    "tool_schema_bias": 15.0
+  },
+  "summary": {
+    "StandardChatBaseline": {
+      "compliance_rate_mean": 0.6346938775510205,
+      "compliance_rate_std": 0.17405662906302363,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0002803495611515815,
+      "refusal_tool_selection_rate_std": 0.00017538811688997552,
+      "seeds_completed": 5
+    },
+    "StandardToolBaseline": {
+      "compliance_rate_mean": 0.326530612244898,
+      "compliance_rate_std": 0.1720832978272065,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.00031027511592659617,
+      "refusal_tool_selection_rate_std": 0.0003230848537094831,
+      "seeds_completed": 5
+    },
+    "PollutedChatBaseline": {
+      "compliance_rate_mean": 0.7408163265306122,
+      "compliance_rate_std": 0.13438430720942307,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.0003557452249644204,
+      "refusal_tool_selection_rate_std": 0.00016452156456462616,
+      "seeds_completed": 5
+    },
+    "ExecutionAwareCoTMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 6.465869943096352e-06,
+      "refusal_tool_selection_rate_std": 1.116829275970996e-05,
+      "seeds_completed": 5
+    },
+    "ExplicitRejectionToolMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.03137254901960784,
+      "success_rate_std": 0.014408763192842223,
+      "refusal_tool_selection_rate_mean": 0.9999723207402468,
+      "refusal_tool_selection_rate_std": 7.352781103632715e-06,
+      "seeds_completed": 5
+    },
+    "ProductionStakesPromptMethod": {
+      "compliance_rate_mean": 0.0,
+      "compliance_rate_std": 0.0,
+      "success_rate_mean": 0.15490196078431373,
+      "success_rate_std": 0.1576451077822885,
+      "refusal_tool_selection_rate_mean": 2.3727631284919778e-07,
+      "refusal_tool_selection_rate_std": 2.2281980542835138e-07,
+      "seeds_completed": 5
+    },
+    "CoTWithoutExecutionFocusAblation": {
+      "compliance_rate_mean": 0.2306122448979592,
+      "compliance_rate_std": 0.16836425476443134,
+      "success_rate_mean": 0.996078431372549,
+      "success_rate_std": 0.004802921064280724,
+      "refusal_tool_selection_rate_mean": 0.013069925305235472,
+      "refusal_tool_selection_rate_std": 0.02563340543552614,
+      "seeds_completed": 5
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "requirements": "stable-baselines3",
+  "benchmark_names": [
+    "Alpaca",
+    "MMLU"
+  ],
+  "baseline_names": [
+    "Full Fine-Tuning",
+    "PPO",
+    "QLoRA"
+  ]
+}

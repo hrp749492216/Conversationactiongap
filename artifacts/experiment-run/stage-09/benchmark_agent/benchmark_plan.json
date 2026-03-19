@@ -1,0 +1,82 @@
+{
+  "selected_benchmarks": [
+    {
+      "name": "Alpaca",
+      "tier": 2,
+      "domain": "instruction_following",
+      "size_mb": 25,
+      "samples": 52000,
+      "metrics": [
+        "loss",
+        "perplexity"
+      ],
+      "api": "datasets.load_dataset('tatsu-lab/alpaca', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base",
+      "role": "primary"
+    },
+    {
+      "name": "MMLU",
+      "tier": 2,
+      "domain": "general_knowledge",
+      "size_mb": 12,
+      "classes": 57,
+      "metrics": [
+        "accuracy"
+      ],
+      "api": "datasets.load_dataset('cais/mmlu', 'all', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base",
+      "role": "secondary"
+    }
+  ],
+  "selected_baselines": [
+    {
+      "name": "Full Fine-Tuning",
+      "source": "Standard supervised fine-tuning on all parameters",
+      "paper": "Baseline approach",
+      "pip": [
+        "transformers"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "PPO",
+      "source": "stable_baselines3.PPO('MlpPolicy', env)",
+      "paper": "Schulman et al., PPO, 2017",
+      "pip": [
+        "stable-baselines3"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "QLoRA",
+      "source": "BitsAndBytesConfig(load_in_4bit=True) + LoRA",
+      "paper": "Dettmers et al., QLoRA, NeurIPS 2023",
+      "pip": [
+        "peft",
+        "bitsandbytes"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    }
+  ],
+  "matched_domains": [
+    "language_modeling",
+    "reinforcement_learning",
+    "llm_finetuning"
+  ],
+  "data_loader_code": "import os\nimport logging\nfrom datasets import load_dataset, DatasetDict\n\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\nlogger = logging.getLogger(__name__)\n\nDATA_CONFIG = {\n    \"primary_benchmark\": \"Alpaca\",\n    \"secondary_benchmark\": \"MMLU\",\n    \"task\": \"causal_lm\",\n    \"text_column\": \"text\",\n    \"input_shape\": \"variable_length_text\",\n    \"num_classes\": None, \n    \"splits\": {\n        \"train_ratio\": 0.90,\n        \"val_ratio\": 0.05,\n        \"test_ratio\": 0.05\n    }\n}\n\ndef format_alpaca_example(example):\n    \"\"\"Formats Alpaca examples into standard instruction-tuning plain text.\"\"\"\n    if example.get(\"input\", \"\").strip() != \"\":\n        text = (f\"Below is an instruction that describes a task, paired with an input that provides further context. \"\n                f\"Write a response that appropriately completes the request.\\n\\n\"\n                f\"### Instruction:\\n{example['instruction']}\\n\\n\"\n                f\"### Input:\\n{example['input']}\\n\\n\"\n                f\"### Response:\\n{example['output']}\")\n    else:\n        text = (f\"Below is an instruction that describes a task. \"\n                f\"Write a response that appropriately completes the request.\\n\\n\"\n                f\"### Instruction:\\n{example['instruction']}\\n\\n\"\n                f\"### Response:\\n{example['output']}\")\n    return {\"text\": text}\n\ndef format_mmlu_example(example):\n    \"\"\"Formats MMLU multiple-choice questions into plain text.\"\"\"\n    choices = example.get('choices', [])\n    formatted_choices = \"\\n\".join([f\"{chr(65+i)}. {choice}\" for i, choice in enumerate(choices)])\n    text = (f\"Question: {example['question']}\\n\\n\"\n            f\"Choices:\\n{formatted_choices}\\n\\n\"\n            f\"Answer: {chr(65+example['answer'])}\")\n    return {\"text\": text}\n\ndef get_datasets(data_root='/workspace/data') -> dict:\n    \"\"\"\n    Loads and prepares the Alpaca and MMLU datasets for LLM fine-tuning and evaluation.\n    \n    Args:\n        data_root (str): The root directory for caching HuggingFace datasets.\n        \n    Returns:\n        dict: A dictionary containing 'train', 'val', and 'test' Dataset objects, \n              plus secondary benchmarks under 'mmlu_val' and 'mmlu_test'.\n    \"\"\"\n    hf_cache_dir = os.path.join(data_root, 'hf')\n    os.makedirs(hf_cache_dir, exist_ok=True)\n    \n    datasets_dict = {}\n\n    try:\n        logger.info(f\"Loading primary dataset: tatsu-lab/alpaca from HuggingFace...\")\n        alpaca_raw = load_dataset('tatsu-lab/alpaca', cache_dir=hf_cache_dir)\n        \n        train_test_split = alpaca_raw['train'].train_test_split(\n            test_size=(DATA_CONFIG['splits']['val_ratio'] + DATA_CONFIG['splits']['test_ratio']), \n            seed=42\n        )\n        \n        val_test_ratio = DATA_CONFIG['splits']['test_ratio'] / (DATA_CONFIG['splits']['val_ratio'] + DATA_CONFIG['splits']['test_ratio'])\n        val_test_split = train_test_split['test'].train_test_split(\n            test_size=val_test_ratio, \n            seed=42\n        )\n        \n        logger.info(\"Applying text formatting to Alpaca splits...\")\n        datasets_dict['train'] = train_test_split['train'].map(format_alpaca_example, remove_columns=train_test_split['train'].column_names)\n        datasets_dict['val'] = val_test_split['train'].map(format_alpaca_example, remove_columns=val_test_split['train'].column_names)\n        datasets_dict['test'] = val_test_split['test'].map(format_alpaca_example, remove_columns=val_test_split['test'].column_names)\n        \n        logger.info(f\"Alpaca splits constructed: Train({len(datasets_dict['train'])}), Val({len(datasets_dict['val'])}), Test({len(datasets_dict['test'])})\")\n\n    except Exception as e:\n        logger.error(f\"Failed to load primary dataset (Alpaca): {str(e)}\")\n        raise RuntimeError(f\"Critical error loading primary dataset. Details: {e}\")\n\n    try:\n        logger.info(f\"Loading secondary dataset: cais/mmlu (all categories) from HuggingFace...\")\n        mmlu_raw = load_dataset('cais/mmlu', 'all', cache_dir=hf_cache_dir)\n        \n        logger.info(\"Applying text formatting to MMLU...\")\n        datasets_dict['mmlu_val'] = mmlu_raw['validation'].map(format_mmlu_example, remove_columns=mmlu_raw['validation'].column_names)\n        datasets_dict['mmlu_test'] = mmlu_raw['test'].map(format_mmlu_example, remove_columns=mmlu_raw['test'].column_names)\n        \n        logger.info(f\"MMLU splits loaded: Val({len(datasets_dict['mmlu_val'])}), Test({len(datasets_dict['mmlu_test'])})\")\n        \n    except Exception as e:\n        logger.warning(f\"Failed to load secondary dataset (MMLU). Continuing without it. Details: {str(e)}\")\n        datasets_dict['mmlu_val'] = None\n        datasets_dict['mmlu_test'] = None\n\n    return datasets_dict",
+  "baseline_code": "import logging\nimport torch\nimport torch.nn as nn\n\n# Configure logging\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')\nlogger = logging.getLogger(__name__)\n\nBASELINES_CONFIG = {\n    \"Full Fine-Tuning\": {\n        \"paper\": \"Standard supervised fine-tuning on all parameters\",\n        \"type\": \"Causal LM\",\n        \"description\": \"Updates all weights of the language model.\"\n    },\n    \"PPO\": {\n        \"paper\": \"Schulman et al., PPO, 2017 (via TRL)\",\n        \"type\": \"RLHF/RL\",\n        \"description\": \"Proximal Policy Optimization for alignment using AutoModelForCausalLMWithValueHead.\"\n    },\n    \"QLoRA\": {\n        \"paper\": \"Dettmers et al., QLoRA, NeurIPS 2023\",\n        \"type\": \"PEFT Causal LM\",\n        \"description\": \"Quantized Low-Rank Adaptation for parameter-efficient fine-tuning.\"\n    }\n}\n\ndef get_baselines(num_classes=None, device='cuda') -> dict:\n    \"\"\"\n    Instantiates baseline models/methods for the Conversation-Action Gap experiment.\n    Note: num_classes is ignored as these are Causal Language Models, not classifiers.\n    \n    Args:\n        num_classes (int, optional): Ignored for causal LM tasks.\n        device (str): Device to load the models onto ('cuda' or 'cpu').\n        \n    Returns:\n        dict: Mapping of baseline method names to model objects.\n    \"\"\"\n    baselines = {}\n    \n    # We use a small, efficient base model for experimental demonstration purposes.\n    # In a full run, this would be a frontier or 7B+ open-weights model.\n    base_model_name = \"gpt2\" \n\n    try:\n        from transformers import AutoModelForCausalLM\n        \n        # 1. Full Fine-Tuning\n        logger.info(f\"Instantiating Full Fine-Tuning baseline using {base_model_name}\")\n        full_ft_model = AutoModelForCausalLM.from_pretrained(base_model_name)\n        full_ft_model.to(device)\n        baselines[\"Full Fine-Tuning\"] = full_ft_model\n\n    except ImportError as e:\n        logger.error(f\"Failed to load transformers for Full Fine-Tuning: {e}\")\n        baselines[\"Full Fine-Tuning\"] = None\n\n    try:\n        from trl import AutoModelForCausalLMWithValueHead\n        \n        # 2. PPO (using TRL for LLM compatibility instead of SB3)\n        logger.info(f\"Instantiating PPO baseline using TRL's AutoModelForCausalLMWithValueHead with {base_model_name}\")\n        ppo_model = AutoModelForCausalLMWithValueHead.from_pretrained(base_model_name)\n        ppo_model.to(device)\n        baselines[\"PPO\"] = ppo_model\n        \n    except ImportError as e:\n        logger.warning(f\"Failed to load trl for PPO baseline: {e}. \"\n                       f\"Please install trl to enable this baseline.\")\n        baselines[\"PPO\"] = None\n\n    try:\n        from transformers import AutoModelForCausalLM, BitsAndBytesConfig\n        from peft import get_peft_model, LoraConfig, TaskType\n        \n        # 3. QLoRA\n        logger.info(f\"Instantiating QLoRA baseline using {base_model_name}\")\n        \n        bnb_config = BitsAndBytesConfig(\n            load_in_4bit=True,\n            bnb_4bit_use_double_quant=True,\n            bnb_4bit_quant_type=\"nf4\",\n            bnb_4bit_compute_dtype=torch.float16\n        )\n        \n        device_map = {\"\": device} if device != \"cpu\" else \"auto\"\n        \n        qlora_base = AutoModelForCausalLM.from_pretrained(\n            base_model_name,\n            quantization_config=bnb_config,\n            device_map=device_map\n        )\n        \n        lora_config = LoraConfig(\n            task_type=TaskType.CAUSAL_LM,\n            inference_mode=False,\n            r=8,\n            lora_alpha=32,\n            lora_dropout=0.1\n        )\n        \n        qlora_model = get_peft_model(qlora_base, lora_config)\n        baselines[\"QLoRA\"] = qlora_model\n        \n    except ImportError as e:\n        logger.warning(f\"Failed to load peft or bitsandbytes for QLoRA baseline: {e}. \"\n                       f\"Please install peft, bitsandbytes, and accelerate.\")\n        baselines[\"QLoRA\"] = None\n        \n    return baselines",
+  "setup_code": "\"\"\"Setup script for dataset downloading and environment preparation.\n\nThis script runs during Phase 1 (setup) of the Docker sandbox,\nwhen network access is available. It downloads datasets and installs\nany additional dependencies.\n\"\"\"\n\nimport os\nimport sys\n\nDATA_ROOT = \"/workspace/data\"\nHF_CACHE = os.path.join(DATA_ROOT, \"hf\")\n\n\ndef download_datasets():\n    \"\"\"Download all required datasets.\"\"\"\n    os.makedirs(DATA_ROOT, exist_ok=True)\n    os.makedirs(HF_CACHE, exist_ok=True)\n\n    # Download Alpaca\n    try:\n        from datasets import load_dataset\n        datasets.load_dataset('tatsu-lab/alpaca', cache_dir='/workspace/data/hf')\n        print(f\"Downloaded Alpaca\")\n    except Exception as e:\n        print(f\"Warning: Failed to download Alpaca: {e}\")\n\n    # Download MMLU\n    try:\n        from datasets import load_dataset\n        datasets.load_dataset('cais/mmlu', 'all', cache_dir='/workspace/data/hf')\n        print(f\"Downloaded MMLU\")\n    except Exception as e:\n        print(f\"Warning: Failed to download MMLU: {e}\")\n\n\nif __name__ == \"__main__\":\n    download_datasets()\n    print(\"Setup complete.\")",
+  "requirements": "stable-baselines3",
+  "rationale": "Alpaca is the most appropriate primary benchmark from the available list because its instruction-following format can easily be adapted into 'chat mode' and 'tool mode' prompt configurations to test the conversation-action gap. MMLU is included as a secondary benchmark to ensure that any safety interventions (like Execution-Aware CoT) do not degrade the model's general knowledge and reasoning capabilities. For baselines, Full Fine-Tuning represents the classic dense alignment approach, PPO represents standard RLHF safety training (where the vulnerability is hypothesized to originate), and QLoRA represents the modern, parameter-efficient standard for instruction/tool tuning. Comparing these ensures the gap is evaluated across both classic and modern post-training paradigms.",
+  "experiment_notes": "Since the time budget is strictly 600s, Full Fine-Tuning and PPO should be performed on a heavily subsampled split of the Alpaca dataset (e.g., 100-200 examples focused purely on safety/refusal boundary cases), or simulated using a very small proxy model like GPT-2 Small. QLoRA is highly recommended for the actual intervention runs to maintain parameter-efficient training within the time limit. Ensure tool-use schemas are rigorously injected into the Alpaca prompts for the 'tool mode' evaluation.",
+  "validation_passed": false,
+  "validation_warnings": [],
+  "total_llm_calls": 10,
+  "total_tokens": 0,
+  "elapsed_sec": 154.03679261099978
+}

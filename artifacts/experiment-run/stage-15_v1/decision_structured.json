@@ -1,0 +1,5 @@
+{
+  "decision": "refine",
+  "raw_text_excerpt": "## Decision\nREFINE\n\n## Justification\nWhile the core hypothesis regarding \"Syntax-Induced Moral Aphasia\" is theoretically innovative and compelling, the current experimental apparatus is fundamentally broken and yielding invalid data. The analysis quality rating is only 2/10, failing the minimum criteria to proceed. The low baseline success rates, evidence of mock endpoint execution, and severe parsing bugs in the harness mean the results cannot be trusted. The hypotheses are sound, but the exper",
+  "generated": "2026-03-17T04:19:16+00:00"
+}

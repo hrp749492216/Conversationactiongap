@@ -1,0 +1,291 @@
+{
+  "summary": {
+    "total": 31,
+    "verified": 31,
+    "suspicious": 0,
+    "hallucinated": 0,
+    "skipped": 0,
+    "integrity_score": 1.0
+  },
+  "results": [
+    {
+      "cite_key": "touvron2023llama",
+      "title": "Llama 2: Open Foundation and Fine-Tuned Chat Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Llama 2: Open Foundation and Fine-Tuned Chat Models'",
+      "relevance_score": 0.1
+    },
+    {
+      "cite_key": "chang2024survey",
+      "title": "A Survey on Evaluation of Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A Survey on Evaluation of Large Language Models'",
+      "relevance_score": 0.2
+    },
+    {
+      "cite_key": "zhao2023survey",
+      "title": "A Survey of Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'A Survey of Large Language Models'",
+      "relevance_score": 0.1
+    },
+    {
+      "cite_key": "huang2024survey",
+      "title": "A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A Survey on Hallucination in Large Language Models: Principles, Taxonomy, Challenges, and Open Questions'",
+      "relevance_score": 0.1
+    },
+    {
+      "cite_key": "kojima2022large",
+      "title": "Large Language Models are Zero-Shot Reasoners",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Large Language Models are Zero-Shot Reasoners'",
+      "relevance_score": 0.1
+    },
+    {
+      "cite_key": "feuerriegel2023generative",
+      "title": "Generative AI",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'Generative AI'",
+      "relevance_score": 0.0
+    },
+    {
+      "cite_key": "wang2024survey",
+      "title": "A survey on large language model based autonomous agents",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A survey on large language model based autonomous agents'",
+      "relevance_score": 0.8
+    },
+    {
+      "cite_key": "yao2024survey",
+      "title": "A survey on large language model (LLM) security and privacy: The Good, The Bad, and The Ugly",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A survey on large language model (LLM) security and privacy: The Good, The Bad, and The Ugly'",
+      "relevance_score": 0.6
+    },
+    {
+      "cite_key": "yao2023tree",
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Tree of Thoughts: Deliberate Problem Solving with Large Language Models'",
+      "relevance_score": 0.1
+    },
+    {
+      "cite_key": "liang2023code",
+      "title": "Code as Policies: Language Model Programs for Embodied Control",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'Code as Policies: Language Model Programs for Embodied Control'",
+      "relevance_score": 0.7
+    },
+    {
+      "cite_key": "zheng2023judging",
+      "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena'",
+      "relevance_score": 0.2
+    },
+    {
+      "cite_key": "shanahan2023role",
+      "title": "Role play with large language models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'Role play with large language models'",
+      "relevance_score": 0.1
+    },
+    {
+      "cite_key": "greshake2023youve",
+      "title": "Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection'",
+      "relevance_score": 0.7
+    },
+    {
+      "cite_key": "anderljung2023frontier",
+      "title": "Frontier AI Regulation: Managing Emerging Risks to Public Safety",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Frontier AI Regulation: Managing Emerging Risks to Public Safety'",
+      "relevance_score": 0.3
+    },
+    {
+      "cite_key": "sun2024trustllm",
+      "title": "TrustLLM: Trustworthiness in Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'TrustLLM: Trustworthiness in Large Language Models'",
+      "relevance_score": 0.5
+    },
+    {
+      "cite_key": "yao2023survey",
+      "title": "A survey on large language model (LLM) security and privacy: The Good, The Bad, and The Ugly",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A survey on large language model (LLM) security and privacy: The Good, The Bad, and The Ugly'",
+      "relevance_score": 0.6
+    },
+    {
+      "cite_key": "nascimento2023selfadaptive",
+      "title": "Self-Adaptive Large Language Model (LLM)-Based Multiagent Systems",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'Self-Adaptive Large Language Model (LLM)-Based Multiagent Systems'",
+      "relevance_score": 0.5
+    },
+    {
+      "cite_key": "geng2025control",
+      "title": "Control Illusion: The Failure of Instruction Hierarchies in Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Control Illusion: The Failure of Instruction Hierarchies in Large Language Models'",
+      "relevance_score": 0.8
+    },
+    {
+      "cite_key": "chen2025survey",
+      "title": "A survey on privacy risks and protection in large language models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A survey on privacy risks and protection in large language models'",
+      "relevance_score": 0.2
+    },
+    {
+      "cite_key": "liu2025advances",
+      "title": "Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Advances and Challenges in Foundation Agents: From Brain-Inspired Intelligence to Evolutionary, Collaborative, and Safe Systems'",
+      "relevance_score": 0.9
+    },
+    {
+      "cite_key": "yang2024wizard",
+      "title": "If LLM Is the Wizard, Then Code Is the Wand: A Survey on How Code Empowers Large Language Models to Serve as Intelligent Agents",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'If LLM Is the Wizard, Then Code Is the Wand: A Survey on How Code Empowers Large Language Models to Serve as Intelligent Agents'",
+      "relevance_score": 0.9
+    },
+    {
+      "cite_key": "zhou2025survey",
+      "title": "A Survey on Backdoor Threats in Large Language Models (LLMs): Attacks, Defenses, and Evaluation Methods",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'A Survey on Backdoor Threats in Large Language Models (LLMs): Attacks, Defenses, and Evaluation Methods'",
+      "relevance_score": 0.3
+    },
+    {
+      "cite_key": "chakraborty2025structured",
+      "title": "Structured Moral Reasoning in Language Models: A Value-Grounded Evaluation Framework",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Structured Moral Reasoning in Language Models: A Value-Grounded Evaluation Framework'",
+      "relevance_score": 0.3
+    },
+    {
+      "cite_key": "jiao2025ethics",
+      "title": "LLM ethics benchmark: a three-dimensional assessment system for evaluating moral reasoning in large language models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via CrossRef: 'LLM ethics benchmark: a three-dimensional assessment system for evaluating moral reasoning in large language models'",
+      "relevance_score": 0.3
+    },
+    {
+      "cite_key": "kanithi2024medic",
+      "title": "MEDIC: Comprehensive Evaluation of Leading Indicators for LLM Safety and Utility in Clinical Applications",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'MEDIC: Comprehensive Evaluation of Leading Indicators for LLM Safety and Utility in Clinical Applications'",
+      "relevance_score": 0.2
+    },
+    {
+      "cite_key": "toyer2023tensor",
+      "title": "Tensor Trust: Interpretable Prompt Injection Attacks from an Online Game",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Tensor Trust: Interpretable Prompt Injection Attacks from an Online Game'",
+      "relevance_score": 0.4
+    },
+    {
+      "cite_key": "chang2025keep",
+      "title": "Keep Security! Benchmarking Security Policy Preservation in Large Language Model Contexts Against Indirect Attacks in Question Answering",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Keep Security! Benchmarking Security Policy Preservation in Large Language Model Contexts Against Indirect Attacks in Question Answering'",
+      "relevance_score": 0.4
+    },
+    {
+      "cite_key": "mandal2024autonomous",
+      "title": "Autonomous Microscopy Experiments through Large Language Model Agents",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Autonomous Microscopy Experiments through Large Language Model Agents'",
+      "relevance_score": 0.6
+    },
+    {
+      "cite_key": "wahreus2025jailbreaking",
+      "title": "Jailbreaking Large Language Models Through Content Concretization",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Jailbreaking Large Language Models Through Content Concretization'",
+      "relevance_score": 0.5
+    },
+    {
+      "cite_key": "luo2026lost",
+      "title": "Lost in Execution: On the Multilingual Robustness of Tool Calling in Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "doi",
+      "details": "Confirmed via DataCite: 'Lost in Execution: On the Multilingual Robustness of Tool Calling in Large Language Models'",
+      "relevance_score": 0.8
+    },
+    {
+      "cite_key": "lapid2023open",
+      "title": "Open Sesame! Universal Black Box Jailbreaking of Large Language Models",
+      "status": "verified",
+      "confidence": 1.0,
+      "method": "openalex",
+      "details": "Confirmed via OpenAlex: 'Open Sesame! Universal Black Box Jailbreaking of Large Language Models'",
+      "relevance_score": 0.5
+    }
+  ]
+}

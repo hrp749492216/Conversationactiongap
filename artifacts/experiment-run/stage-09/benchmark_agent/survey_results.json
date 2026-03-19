@@ -1,0 +1,251 @@
+{
+  "matched_domains": [
+    "language_modeling",
+    "reinforcement_learning",
+    "llm_finetuning"
+  ],
+  "benchmarks": [
+    {
+      "name": "WikiText-103",
+      "tier": 2,
+      "domain": "language_modeling",
+      "size_mb": 500,
+      "samples": 28000,
+      "metrics": [
+        "perplexity",
+        "bits_per_character"
+      ],
+      "api": "datasets.load_dataset('wikitext', 'wikitext-103-v1', cache_dir='/workspace/data/hf')",
+      "source_domain": "language_modeling",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "WikiText-2",
+      "tier": 2,
+      "domain": "language_modeling",
+      "size_mb": 12,
+      "samples": 2000,
+      "metrics": [
+        "perplexity"
+      ],
+      "api": "datasets.load_dataset('wikitext', 'wikitext-2-v1', cache_dir='/workspace/data/hf')",
+      "source_domain": "language_modeling",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "Penn Treebank",
+      "tier": 2,
+      "domain": "language_modeling",
+      "size_mb": 5,
+      "metrics": [
+        "perplexity"
+      ],
+      "api": "datasets.load_dataset('ptb_text_only', cache_dir='/workspace/data/hf')",
+      "source_domain": "language_modeling",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "CartPole-v1",
+      "tier": 1,
+      "domain": "classic_control",
+      "size_mb": 0,
+      "metrics": [
+        "episode_reward",
+        "episode_length"
+      ],
+      "api": "gymnasium.make('CartPole-v1')",
+      "note": "Simple baseline environment — episodic, discrete action",
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "LunarLander-v3",
+      "tier": 1,
+      "domain": "classic_control",
+      "size_mb": 0,
+      "metrics": [
+        "episode_reward"
+      ],
+      "api": "gymnasium.make('LunarLander-v3')",
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "Acrobot-v1",
+      "tier": 1,
+      "domain": "classic_control",
+      "size_mb": 0,
+      "metrics": [
+        "episode_reward",
+        "steps_to_solve"
+      ],
+      "api": "gymnasium.make('Acrobot-v1')",
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "HalfCheetah-v5",
+      "tier": 2,
+      "domain": "mujoco",
+      "size_mb": 50,
+      "metrics": [
+        "average_return",
+        "episode_reward"
+      ],
+      "api": "gymnasium.make('HalfCheetah-v5')",
+      "pip": [
+        "gymnasium[mujoco]"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "Hopper-v5",
+      "tier": 2,
+      "domain": "mujoco",
+      "size_mb": 50,
+      "metrics": [
+        "average_return"
+      ],
+      "api": "gymnasium.make('Hopper-v5')",
+      "pip": [
+        "gymnasium[mujoco]"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "Alpaca",
+      "tier": 2,
+      "domain": "instruction_following",
+      "size_mb": 25,
+      "samples": 52000,
+      "metrics": [
+        "loss",
+        "perplexity"
+      ],
+      "api": "datasets.load_dataset('tatsu-lab/alpaca', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "MMLU",
+      "tier": 2,
+      "domain": "general_knowledge",
+      "size_mb": 12,
+      "classes": 57,
+      "metrics": [
+        "accuracy"
+      ],
+      "api": "datasets.load_dataset('cais/mmlu', 'all', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "HellaSwag",
+      "tier": 2,
+      "domain": "commonsense_reasoning",
+      "size_mb": 70,
+      "metrics": [
+        "accuracy"
+      ],
+      "api": "datasets.load_dataset('Rowan/hellaswag', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    }
+  ],
+  "baselines": [
+    {
+      "name": "GPT-2 Small",
+      "source": "transformers.AutoModelForCausalLM.from_pretrained('gpt2')",
+      "paper": "Radford et al., Language Models are Unsupervised Multitask Learners, 2019",
+      "pip": [
+        "transformers"
+      ],
+      "source_domain": "language_modeling",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "LSTM LM",
+      "source": "Custom: 2-layer LSTM with tied embeddings",
+      "paper": "Merity et al., AWD-LSTM, ICLR 2018",
+      "pip": [],
+      "source_domain": "language_modeling",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "PPO",
+      "source": "stable_baselines3.PPO('MlpPolicy', env)",
+      "paper": "Schulman et al., PPO, 2017",
+      "pip": [
+        "stable-baselines3"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "SAC",
+      "source": "stable_baselines3.SAC('MlpPolicy', env)",
+      "paper": "Haarnoja et al., Soft Actor-Critic, ICML 2018",
+      "pip": [
+        "stable-baselines3"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "DQN",
+      "source": "stable_baselines3.DQN('MlpPolicy', env)",
+      "paper": "Mnih et al., Playing Atari with Deep RL, 2015",
+      "pip": [
+        "stable-baselines3"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "A2C",
+      "source": "stable_baselines3.A2C('MlpPolicy', env)",
+      "paper": "Mnih et al., Asynchronous Methods for Deep RL, ICML 2016",
+      "pip": [
+        "stable-baselines3"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "Full Fine-Tuning",
+      "source": "Standard supervised fine-tuning on all parameters",
+      "paper": "Baseline approach",
+      "pip": [
+        "transformers"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "LoRA",
+      "source": "peft.LoraConfig(r=16, lora_alpha=32, target_modules=['q_proj', 'v_proj'])",
+      "paper": "Hu et al., LoRA, ICLR 2022",
+      "pip": [
+        "peft"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "QLoRA",
+      "source": "BitsAndBytesConfig(load_in_4bit=True) + LoRA",
+      "paper": "Dettmers et al., QLoRA, NeurIPS 2023",
+      "pip": [
+        "peft",
+        "bitsandbytes"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    }
+  ],
+  "hf_datasets_found": 0,
+  "llm_fallback_used": false,
+  "rationale": ""
+}

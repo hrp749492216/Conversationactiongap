@@ -1,0 +1,125 @@
+{
+  "section_analysis": [
+    {
+      "heading": "Title",
+      "word_count": 8,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "Abstract",
+      "word_count": 203,
+      "canonical": "abstract",
+      "target": [
+        180,
+        220
+      ],
+      "status": "ok",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "1. Introduction",
+      "word_count": 882,
+      "canonical": "",
+      "bullet_density": 0.44,
+      "bullet_status": "high"
+    },
+    {
+      "heading": "2. Related Work",
+      "word_count": 0,
+      "canonical": ""
+    },
+    {
+      "heading": "3. Method: The CAGE Framework",
+      "word_count": 936,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "4. Experimental Setup",
+      "word_count": 778,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "5. Results and Analysis",
+      "word_count": 806,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "6. Discussion",
+      "word_count": 438,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "7. Limitations",
+      "word_count": 228,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "8. Conclusion",
+      "word_count": 128,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "5. Method",
+      "word_count": 994,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "6. Experiments",
+      "word_count": 1036,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "7. Results",
+      "word_count": 868,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "8. Discussion",
+      "word_count": 481,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "9. Limitations",
+      "word_count": 259,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    },
+    {
+      "heading": "10. Conclusion",
+      "word_count": 112,
+      "canonical": "",
+      "bullet_density": 0.0,
+      "bullet_status": "ok"
+    }
+  ],
+  "overall_warnings": [
+    "1. Introduction has 4/9 bullet/numbered lines (44% density, threshold 25%)"
+  ],
+  "revision_directives": [
+    "REWRITE 1. Introduction as flowing academic prose. Convert bullet points to narrative paragraphs."
+  ]
+}

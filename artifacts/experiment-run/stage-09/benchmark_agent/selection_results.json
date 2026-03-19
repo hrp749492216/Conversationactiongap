@@ -1,0 +1,75 @@
+{
+  "selected_benchmarks": [
+    {
+      "name": "Alpaca",
+      "tier": 2,
+      "domain": "instruction_following",
+      "size_mb": 25,
+      "samples": 52000,
+      "metrics": [
+        "loss",
+        "perplexity"
+      ],
+      "api": "datasets.load_dataset('tatsu-lab/alpaca', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base",
+      "role": "primary"
+    },
+    {
+      "name": "MMLU",
+      "tier": 2,
+      "domain": "general_knowledge",
+      "size_mb": 12,
+      "classes": 57,
+      "metrics": [
+        "accuracy"
+      ],
+      "api": "datasets.load_dataset('cais/mmlu', 'all', cache_dir='/workspace/data/hf')",
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base",
+      "role": "secondary"
+    }
+  ],
+  "selected_baselines": [
+    {
+      "name": "Full Fine-Tuning",
+      "source": "Standard supervised fine-tuning on all parameters",
+      "paper": "Baseline approach",
+      "pip": [
+        "transformers"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "PPO",
+      "source": "stable_baselines3.PPO('MlpPolicy', env)",
+      "paper": "Schulman et al., PPO, 2017",
+      "pip": [
+        "stable-baselines3"
+      ],
+      "source_domain": "reinforcement_learning",
+      "origin": "knowledge_base"
+    },
+    {
+      "name": "QLoRA",
+      "source": "BitsAndBytesConfig(load_in_4bit=True) + LoRA",
+      "paper": "Dettmers et al., QLoRA, NeurIPS 2023",
+      "pip": [
+        "peft",
+        "bitsandbytes"
+      ],
+      "source_domain": "llm_finetuning",
+      "origin": "knowledge_base"
+    }
+  ],
+  "required_pip": [
+    "transformers",
+    "stable-baselines3",
+    "peft",
+    "bitsandbytes"
+  ],
+  "rationale": "Alpaca is the most appropriate primary benchmark from the available list because its instruction-following format can easily be adapted into 'chat mode' and 'tool mode' prompt configurations to test the conversation-action gap. MMLU is included as a secondary benchmark to ensure that any safety interventions (like Execution-Aware CoT) do not degrade the model's general knowledge and reasoning capabilities. For baselines, Full Fine-Tuning represents the classic dense alignment approach, PPO represents standard RLHF safety training (where the vulnerability is hypothesized to originate), and QLoRA represents the modern, parameter-efficient standard for instruction/tool tuning. Comparing these ensures the gap is evaluated across both classic and modern post-training paradigms.",
+  "experiment_notes": "Since the time budget is strictly 600s, Full Fine-Tuning and PPO should be performed on a heavily subsampled split of the Alpaca dataset (e.g., 100-200 examples focused purely on safety/refusal boundary cases), or simulated using a very small proxy model like GPT-2 Small. QLoRA is highly recommended for the actual intervention runs to maintain parameter-efficient training within the time limit. Ensure tool-use schemas are rigorously injected into the Alpaca prompts for the 'tool mode' evaluation.",
+  "total_filtered": 11
+}

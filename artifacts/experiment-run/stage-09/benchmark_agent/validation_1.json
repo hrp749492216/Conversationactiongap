@@ -1,0 +1,21 @@
+{
+  "passed": false,
+  "errors": [
+    "NameError in setup script: 'from datasets import load_dataset' is followed by 'datasets.load_dataset(...)'. The 'datasets' module itself is not imported, so this will crash during the download phase."
+  ],
+  "warnings": [],
+  "severity": "error",
+  "llm_review": {
+    "passed": false,
+    "issues": [
+      "NameError in setup script: 'from datasets import load_dataset' is followed by 'datasets.load_dataset(...)'. The 'datasets' module itself is not imported, so this will crash during the download phase."
+    ],
+    "suggestions": [
+      "Fix setup.py by calling 'load_dataset(...)' directly instead of 'datasets.load_dataset(...)', or change the import to 'import datasets'."
+    ],
+    "severity": "error"
+  },
+  "suggestions": [
+    "Fix setup.py by calling 'load_dataset(...)' directly instead of 'datasets.load_dataset(...)', or change the import to 'import datasets'."
+  ]
+}
